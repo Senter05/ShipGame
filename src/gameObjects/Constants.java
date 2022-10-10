@@ -1,5 +1,7 @@
 package gameObjects;
 
+import javax.swing.filechooser.FileSystemView;
+
 public class Constants {
 
     // frame dimensions
@@ -56,6 +58,10 @@ public class Constants {
     public static final String SCORE = "SCORE";
     public static final String DATE = "DATE";
 
+    public static final String SCORE_PATH = FileSystemView.getFileSystemView().getDefaultDirectory().getPath() +
+            "\\SpaceShip\\data.json"; // data.xml if you use XMLParser
 
+    public static final String PLAYER = "PLAYER";
+    public static final String PLAYERS = "PLAYERS";
 
 }

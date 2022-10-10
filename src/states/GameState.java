@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import gameObjects.Chronometer;
@@ -14,11 +16,13 @@ import gameObjects.Message;
 import gameObjects.Meteor;
 import gameObjects.MovingObject;
 import gameObjects.Player;
+import io.JSONParser;
 import gameObjects.Size;
 import gameObjects.Ufo;
 import graphics.Animation;
 import graphics.Assets;
 import graphics.Sound;
+import io.ScoreData;
 import math.Vector2D;
 
 public class GameState extends State{
@@ -201,6 +205,18 @@ public class GameState extends State{
         }
 
         if(gameOver && !gameOverTimer.isRunning()) {
+
+            try {
+                ArrayList<ScoreData> dataList = JSONParser.readFile();
+                dataList.add(new ScoreData(score));
+                JSONParser.writeFile(dataList);
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             State.changeState(new MenuState());
         }
 

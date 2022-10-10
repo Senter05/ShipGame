@@ -2,6 +2,8 @@ package states;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
@@ -9,6 +11,7 @@ import java.util.PriorityQueue;
 import gameObjects.Constants;
 import graphics.Assets;
 import graphics.Text;
+import io.JSONParser;
 import io.ScoreData;
 import math.Vector2D;
 import ui.Action;
@@ -47,6 +50,21 @@ public class ScoreState extends State{
         };
 
         highScores = new PriorityQueue<ScoreData>(10, scoreComparator);
+
+        try {
+            ArrayList<ScoreData> dataList = JSONParser.readFile();
+
+            for (ScoreData d: dataList){
+                highScores.add(d);
+            }
+
+            while (highScores.size() > 10){
+                highScores.poll();
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
     }
 
